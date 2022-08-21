@@ -8,7 +8,6 @@ app.use(formidable());
 
 // connexion à la BDD
 mongoose.connect(process.env.MONGODB_URI);
-console.log(process.env.MONGODB_URI);
 // déclaration du modèle
 const Member = mongoose.model("Member", {
   name: {
@@ -19,13 +18,23 @@ const Member = mongoose.model("Member", {
 
 // create
 app.post("/create", async (req, res) => {
-  console.log(req.fields);
   try {
     const newMember = new Member({
       name: req.fields.name,
     });
     await newMember.save();
     res.json({ newMember });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// read
+app.get("/", async (req, res) => {
+  console.log("route: /");
+  try {
+    const members = await Member.find();
+    res.json(members);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
