@@ -8,6 +8,7 @@ app.use(formidable());
 
 // connexion à la BDD
 mongoose.connect(process.env.MONGODB_URI);
+console.log(process.env.MONGODB_URI);
 // déclaration du modèle
 const Member = mongoose.model("Member", {
   name: {
