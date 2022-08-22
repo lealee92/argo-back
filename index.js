@@ -22,7 +22,7 @@ const Member = mongoose.model("Member", {
 app.post("/create", async (req, res) => {
   try {
     const newMember = new Member({
-      name: req.body.name,
+      name: req.fields.name,
     });
     await newMember.save();
     res.json({ newMember });
